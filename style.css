@@ -1,0 +1,717 @@
+/* 1. RESET, VARIÁVEIS E CONFIGURAÇÕES GERAIS */
+:root {
+    --cor-verde: #76c043;
+    --cor-verde-hover: #63a635;
+    --cor-escura-historia: #110d0a;
+    --cor-rodape: #1e1e1e;
+    --cor-texto-escuro: #111111;
+    --cor-texto-claro: #ffffff;
+    --cor-placeholder: #dcdcdc;
+
+    --fonte-titulo: 'Playfair Display', Georgia, serif;
+    --fonte-cursiva: 'Great Vibes', cursive;
+    --fonte-corpo: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fonte-corpo);
+    background-color: #ffffff;
+    color: var(--cor-texto-escuro);
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: var(--cor-placeholder); /* Cor de fundo enquanto não há imagem */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Classe utilitária para alternar entre a Home e o Cardápio via JS */
+.oculto {
+    display: none !important;
+}
+
+/* 2. HERO / CAPA */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.hero-bg img {
+    filter: brightness(0.65);
+}
+
+/* Barra de Navegação Superior */
+.navbar {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 25px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-top img {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--cor-texto-claro);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+.nav-links a:hover {
+    color: var(--cor-verde);
+    transition: color 0.2s ease;
+}
+
+/* Destaque verde em "Reservas | Cardápio" */
+.nav-destaque {
+    background-color: var(--cor-verde);
+    color: var(--cor-texto-claro);
+    padding: 8px 22px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-shadow: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.nav-destaque a:hover {
+    color: var(--cor-texto-escuro);
+}
+
+.nav-destaque .divisor {
+    font-weight: 700;
+}
+
+/* Texto Central da Capa */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    margin: auto;
+    text-align: center;
+    color: var(--cor-texto-claro);
+    padding: 0 20px 60px;
+}
+
+.hero-title {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+}
+
+.hero-subtitle {
+    font-family: var(--fonte-cursiva);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 400;
+    margin-top: -5px;
+    text-shadow: 0 3px 15px rgba(0, 0, 0, 0.85);
+}
+
+/* 3. NOSSA HISTÓRIA */
+.historia-section {
+    background-color: var(--cor-escura-historia);
+    color: var(--cor-texto-claro);
+    padding: 90px 40px;
+}
+
+.historia-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+}
+
+.historia-coluna {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+}
+
+.historia-img-wrapper {
+    width: 100%;
+    height: 460px;
+    border-radius: 32px;
+    overflow: hidden;
+}
+
+.historia-texto {
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.45;
+    text-align: center;
+    padding: 0 15px;
+}
+
+/* 4. BANNER COM TRANSIÇÃO DE IMAGENS */
+.banner-transicao-section {
+    position: relative;
+    width: 100%;
+    height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.banner-slides {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.banner-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.banner-slide.ativo {
+    opacity: 1;
+}
+
+.banner-slide img {
+    filter: brightness(0.5);
+}
+
+.banner-overlay-content {
+    position: relative;
+    z-index: 5;
+    max-width: 900px;
+    padding: 0 24px;
+    text-align: center;
+    color: var(--cor-texto-claro);
+}
+
+.banner-overlay-content h2 {
+    font-family: var(--fonte-corpo);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
+}
+
+.banner-overlay-content p {
+    font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    line-height: 1.4;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.85);
+}
+
+/* 5. DESTAQUES (CARNES, VEGANO, SOBREMESAS) */
+.destaques-section {
+    position: relative;
+    background-color: #ffffff;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 80px 40px 40px;
+}
+
+.destaques-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+}
+
+.destaque-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.destaque-img-box {
+    position: relative;
+    width: 100%;
+    height: 310px;
+    margin-bottom: 28px;
+    overflow: hidden;
+}
+
+/* Bandeirola verde */
+.faixa-verde {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 78%;
+    background-color: var(--cor-verde);
+    padding: 4px 25px 4px 18px;
+    clip-path: polygon(0 0, 100% 0, 88% 50%, 100% 100%, 0 100%);
+}
+
+.faixa-verde span {
+    font-family: var(--fonte-cursiva);
+    font-size: 2.8rem;
+    color: var(--cor-texto-escuro);
+    display: block;
+    line-height: 1.1;
+}
+
+.destaque-descricao {
+    font-size: 1.25rem;
+    line-height: 1.45;
+    text-align: center;
+    color: var(--cor-texto-escuro);
+    max-width: 320px;
+}
+
+/* Formiguinhas decorativas */
+.formigas-decoracao {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.formigas-decoracao img {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+/* 6. CHAMADA CARDÁPIO + RODAPÉ */
+.cta-cardapio-section {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 90px 20px 110px;
+}
+
+.btn-ver-cardapio {
+    display: inline-block;
+    background-color: var(--cor-verde);
+    color: var(--cor-texto-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    padding: 20px 65px;
+    border-radius: 60px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-ver-cardapio:hover {
+    background-color: var(--cor-verde-hover);
+    transform: scale(1.03);
+}
+
+.aviso-kids {
+    margin-top: 18px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cor-texto-escuro);
+}
+
+/* Rodapé Escuro */
+.rodape {
+    background-color: var(--cor-rodape);
+    color: var(--cor-texto-claro);
+    padding: 65px 40px;
+}
+
+.rodape-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.rodape-logo-linha {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.rodape-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+.rodape-textos h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.rodape-textos p {
+    font-size: 1rem;
+    color: #e0e0e0;
+}
+
+.rodape-redes {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+    padding-left: 10px;
+}
+
+.rodape-redes a {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid var(--cor-texto-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.rodape-redes a:hover {
+    background-color: var(--cor-verde);
+    border-color: var(--cor-verde);
+    color: var(--cor-texto-escuro);
+}
+
+.rodape-links {
+    display: flex;
+    gap: 80px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.rodape-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rodape-links a:hover {
+    color: var(--cor-verde);
+}
+
+/* 7. SLIDER DO TOPO DO CARDÁPIO */
+.cardapio-hero-slider {
+    position: relative;
+    width: 100%;
+    height: 540px;
+    overflow: hidden;
+    background-color: #111111;
+}
+
+/* Logo + Nome no canto superior esquerdo */
+.cardapio-topo-marca {
+    position: absolute;
+    top: 28px;
+    left: 40px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--cor-texto-claro);
+}
+
+.cardapio-topo-marca img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background-color: transparent;
+}
+
+.cardapio-topo-marca span {
+    font-family: var(--fonte-titulo);
+    font-size: 2rem;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Transição dos Slides */
+.cardapio-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardapio-slide.ativo {
+    opacity: 1;
+    z-index: 5;
+}
+
+.cardapio-slide img {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    filter: brightness(0.55);
+}
+
+.cardapio-slide-conteudo {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: var(--cor-texto-claro);
+    padding: 0 20px;
+}
+
+.cardapio-slide-conteudo h2 {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(3rem, 6vw, 4.8rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.85);
+}
+
+.cardapio-slide-conteudo h2.titulo-cursivo {
+    font-family: var(--fonte-cursiva);
+    font-size: clamp(3.8rem, 7vw, 5.8rem);
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+.cardapio-slide-conteudo p {
+    font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+    font-weight: 600;
+    line-height: 1.35;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.85);
+}
+
+/* 8. BARRA FIXA E GRADE DO CARDÁPIO */
+
+/* Barra de Categorias Suspensa (Sticky no Topo) */
+.menu-categorias-fixo {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #ffffff;
+    padding: 20px 20px 10px;
+}
+
+.menu-categorias-fixo ul {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.aba-categoria {
+    display: inline-block;
+    font-family: var(--fonte-titulo);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--cor-texto-escuro);
+    padding: 8px 26px;
+    border-radius: 30px;
+    transition: background-color 0.25s ease;
+}
+
+.aba-categoria:hover,
+.aba-categoria.ativa {
+    background-color: var(--cor-verde);
+}
+
+/* Conteúdo e Seções do Cardápio */
+.cardapio-conteudo {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 30px 40px 100px;
+}
+
+.cardapio-secao {
+    padding-top: 50px;
+    margin-bottom: 60px;
+    scroll-margin-top: 80px;
+}
+
+.secao-titulo {
+    font-family: var(--fonte-titulo);
+    font-size: clamp(2.5rem, 4.5vw, 3.6rem);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 55px;
+    color: var(--cor-texto-escuro);
+}
+
+/* Grade 2x2 Limpa */
+.pratos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 55px 70px;
+}
+
+.prato-item {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.prato-foto {
+    width: 240px;
+    height: 185px;
+    flex-shrink: 0;
+    border-radius: 26px;
+    overflow: hidden;
+}
+
+.prato-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.prato-info h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--cor-texto-escuro);
+    margin-bottom: 18px;
+}
+
+.btn-saiba-mais {
+    background-color: var(--cor-verde);
+    color: var(--cor-texto-escuro);
+    font-family: var(--fonte-titulo);
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    padding: 10px 32px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-saiba-mais:hover {
+    background-color: var(--cor-verde-hover);
+    transform: translateY(-2px);
+}
+
+/* 9. RESPONSIVIDADE (TABLETS E CELULARES) */
+@media (max-width: 992px) {
+    .navbar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-links {
+        gap: 25px;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+
+    .historia-container {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .destaques-grid {
+        grid-template-columns: 1fr;
+        max-width: 460px;
+        margin: 0 auto;
+    }
+
+    .pratos-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+    }
+}
+
+@media (max-width: 600px) {
+    .prato-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .prato-foto {
+        width: 100%;
+        max-width: 300px;
+        height: 210px;
+    }
+
+    .rodape-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .rodape-logo-linha {
+        flex-direction: column;
+    }
+
+    .rodape-redes {
+        justify-content: center;
+        padding-left: 0;
+    }
+
+    .rodape-links {
+        gap: 40px;
+    }
+
+    .cardapio-topo-marca {
+        left: 20px;
+        top: 20px;
+    }
+
+    .cardapio-topo-marca img {
+        width: 65px;
+        height: 65px;
+    }
+
+    .cardapio-topo-marca span {
+        font-size: 1.5rem;
+    }
+}
